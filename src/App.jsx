@@ -126,9 +126,30 @@ const SlitherLink = () => {
     setShowNextPopup(false);
   };
 
+  const handleRefreshPuzzle = () => {
+    setPuzzleIndex((prev) => {
+      let nextIndex;
+      do {
+        nextIndex = Math.floor(Math.random() * puzzles.length);
+      } while (nextIndex === prev);
+      return nextIndex;
+    });
+    setLines(new Set());
+    setShowingSolution(false);
+    setMessage('');
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
+      <div className="bg-white p-8 rounded-lg shadow-lg relative">
+        {/* Reload Button */}
+        <button
+          className="absolute top-4 right-4 px-3 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors text-sm font-medium"
+          onClick={handleRefreshPuzzle}
+        >
+          ↻ 
+        </button>
+
         {message && (
           <div className="mb-4 p-4 bg-yellow-100 text-gray-800 rounded-lg">
             {message}
@@ -136,91 +157,93 @@ const SlitherLink = () => {
         )}
 
         {/* Puzzle Grid */}
-        <div className="relative mb-6">
-          {Array.from({ length: GRID_SIZE }, (_, row) => (
-            <div key={row} className="flex">
-              {Array.from({ length: GRID_SIZE }, (_, col) => {
-                // The puzzle number for this cell, if any
-                const clue = getNumber(row, col);
-                const count = cellCounts[`${row},${col}`] || 0;
-                const exceed = clue !== null && count > clue;
+        <div className="relative mb-6 flex justify-center">
+          <div className="flex flex-col items-center">
+            {Array.from({ length: GRID_SIZE }, (_, row) => (
+              <div key={row} className="flex">
+                {Array.from({ length: GRID_SIZE }, (_, col) => {
+                  // The puzzle number for this cell, if any
+                  const clue = getNumber(row, col);
+                  const count = cellCounts[`${row},${col}`] || 0;
+                  const exceed = clue !== null && count > clue;
 
-                return (
-                  <div
-                    key={col}
-                    className="relative"
-                    style={{ width: '50px', height: '50px' }}
-                  >
-                    {clue !== null && (
-                      <span
-                        className={`absolute inset-0 flex items-center justify-center text-xl font-semibold ${
-                          exceed ? 'text-red-600' : ''
-                        }`}
-                      >
-                        {clue}
-                      </span>
-                    )}
+                  return (
+                    <div
+                      key={col}
+                      className="relative"
+                      style={{ width: '50px', height: '50px' }}
+                    >
+                      {clue !== null && (
+                        <span
+                          className={`absolute inset-0 flex items-center justify-center text-xl font-semibold ${
+                            exceed ? 'text-red-600' : ''
+                          }`}
+                        >
+                          {clue}
+                        </span>
+                      )}
 
-                    {/* Top edge: (row,col) -> (row,col+1) */}
-                    <button
-                      className={`absolute top-0 left-0 right-0 h-1 cursor-pointer ${
-                        hasLine(row, col, row, col + 1)
-                          ? 'bg-blue-600'
-                          : 'bg-gray-300 hover:bg-blue-400'
-                      }`}
-                      onClick={() => toggleLine(row, col, row, col + 1)}
-                    />
-
-                    {/* Left edge: (row,col) -> (row+1,col) */}
-                    <button
-                      className={`absolute top-0 left-0 bottom-0 w-1 cursor-pointer ${
-                        hasLine(row, col, row + 1, col)
-                          ? 'bg-blue-600'
-                          : 'bg-gray-300 hover:bg-blue-400'
-                      }`}
-                      onClick={() => toggleLine(row, col, row + 1, col)}
-                    />
-
-                    {/* Right edge: (row,col+1) -> (row+1,col+1) for the last col */}
-                    {col === GRID_SIZE - 1 && (
+                      {/* Top edge: (row,col) -> (row,col+1) */}
                       <button
-                        className={`absolute top-0 right-0 bottom-0 w-1 cursor-pointer ${
-                          hasLine(row, col + 1, row + 1, col + 1)
+                        className={`absolute top-0 left-0 right-0 h-1 cursor-pointer ${
+                          hasLine(row, col, row, col + 1)
                             ? 'bg-blue-600'
                             : 'bg-gray-300 hover:bg-blue-400'
                         }`}
-                        onClick={() => toggleLine(row, col + 1, row + 1, col + 1)}
+                        onClick={() => toggleLine(row, col, row, col + 1)}
                       />
-                    )}
 
-                    {/* Bottom edge: (row+1,col) -> (row+1,col+1) for the last row */}
-                    {row === GRID_SIZE - 1 && (
+                      {/* Left edge: (row,col) -> (row+1,col) */}
                       <button
-                        className={`absolute bottom-0 left-0 right-0 h-1 cursor-pointer ${
-                          hasLine(row + 1, col, row + 1, col + 1)
+                        className={`absolute top-0 left-0 bottom-0 w-1 cursor-pointer ${
+                          hasLine(row, col, row + 1, col)
                             ? 'bg-blue-600'
                             : 'bg-gray-300 hover:bg-blue-400'
                         }`}
-                        onClick={() => toggleLine(row + 1, col, row + 1, col + 1)}
+                        onClick={() => toggleLine(row, col, row + 1, col)}
                       />
-                    )}
 
-                    {/* Dots in corners */}
-                    <div className="absolute top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-black rounded-full" />
-                    {col === GRID_SIZE - 1 && (
-                      <div className="absolute top-0 right-0 w-2 h-2 -mr-1 -mt-1 bg-black rounded-full" />
-                    )}
-                    {row === GRID_SIZE - 1 && (
-                      <div className="absolute bottom-0 left-0 w-2 h-2 -ml-1 -mb-1 bg-black rounded-full" />
-                    )}
-                    {row === GRID_SIZE - 1 && col === GRID_SIZE - 1 && (
-                      <div className="absolute bottom-0 right-0 w-2 h-2 -mr-1 -mb-1 bg-black rounded-full" />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ))}
+                      {/* Right edge: (row,col+1) -> (row+1,col+1) for the last col */}
+                      {col === GRID_SIZE - 1 && (
+                        <button
+                          className={`absolute top-0 right-0 bottom-0 w-1 cursor-pointer ${
+                            hasLine(row, col + 1, row + 1, col + 1)
+                              ? 'bg-blue-600'
+                              : 'bg-gray-300 hover:bg-blue-400'
+                          }`}
+                          onClick={() => toggleLine(row, col + 1, row + 1, col + 1)}
+                        />
+                      )}
+
+                      {/* Bottom edge: (row+1,col) -> (row+1,col+1) for the last row */}
+                      {row === GRID_SIZE - 1 && (
+                        <button
+                          className={`absolute bottom-0 left-0 right-0 h-1 cursor-pointer ${
+                            hasLine(row + 1, col, row + 1, col + 1)
+                              ? 'bg-blue-600'
+                              : 'bg-gray-300 hover:bg-blue-400'
+                          }`}
+                          onClick={() => toggleLine(row + 1, col, row + 1, col + 1)}
+                        />
+                      )}
+
+                      {/* Dots in corners */}
+                      <div className="absolute top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-black rounded-full" />
+                      {col === GRID_SIZE - 1 && (
+                        <div className="absolute top-0 right-0 w-2 h-2 -mr-1 -mt-1 bg-black rounded-full" />
+                      )}
+                      {row === GRID_SIZE - 1 && (
+                        <div className="absolute bottom-0 left-0 w-2 h-2 -ml-1 -mb-1 bg-black rounded-full" />
+                      )}
+                      {row === GRID_SIZE - 1 && col === GRID_SIZE - 1 && (
+                        <div className="absolute bottom-0 right-0 w-2 h-2 -mr-1 -mb-1 bg-black rounded-full" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Add a puzzle counter */}
