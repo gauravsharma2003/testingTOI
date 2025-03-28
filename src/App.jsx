@@ -240,7 +240,7 @@ const SlitherLink = () => {
 
         {/* Puzzle Grid */}
         <div className="relative mb-6 flex justify-center">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-inner">
             {Array.from({ length: GRID_SIZE }, (_, row) => (
               <div key={row} className="flex">
                 {Array.from({ length: GRID_SIZE }, (_, col) => {
@@ -310,15 +310,15 @@ const SlitherLink = () => {
                       )}
 
                       {/* Dots in corners */}
-                      <div className="absolute top-0 left-0 w-2 h-2 -ml-1 -mt-1 bg-black rounded-full" />
+                      <div className="absolute top-0 left-0 w-2.5 h-2.5 -ml-[5px] -mt-[5px] bg-black rounded-full shadow-sm" />
                       {col === GRID_SIZE - 1 && (
-                        <div className="absolute top-0 right-0 w-2 h-2 -mr-1 -mt-1 bg-black rounded-full" />
+                        <div className="absolute top-0 right-0 w-2.5 h-2.5 -mr-[5px] -mt-[5px] bg-black rounded-full shadow-sm" />
                       )}
                       {row === GRID_SIZE - 1 && (
-                        <div className="absolute bottom-0 left-0 w-2 h-2 -ml-1 -mb-1 bg-black rounded-full" />
+                        <div className="absolute bottom-0 left-0 w-2.5 h-2.5 -ml-[5px] -mb-[5px] bg-black rounded-full shadow-sm" />
                       )}
                       {row === GRID_SIZE - 1 && col === GRID_SIZE - 1 && (
-                        <div className="absolute bottom-0 right-0 w-2 h-2 -mr-1 -mb-1 bg-black rounded-full" />
+                        <div className="absolute bottom-0 right-0 w-2.5 h-2.5 -mr-[5px] -mb-[5px] bg-black rounded-full shadow-sm" />
                       )}
                     </div>
                   );
