@@ -1,6 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { puzzles } from './assets/good';
 
+const Toast = ({ message, onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in-up">
+      {message}
+    </div>
+  );
+};
+
 const SlitherLink = () => {
   // Track which puzzle is currently active - initialize with random index
   const [puzzleIndex, setPuzzleIndex] = useState(Math.floor(Math.random() * puzzles.length));
@@ -17,6 +33,10 @@ const SlitherLink = () => {
   const [message, setMessage] = useState('');
   // Show popup for next puzzle
   const [showNextPopup, setShowNextPopup] = useState(false);
+  // Hint cooldown timer
+  const [hintCooldown, setHintCooldown] = useState(0);
+  // Toast message
+  const [toast, setToast] = useState(null);
 
   const getLineKey = (r1, c1, r2, c2) => {
     if (r1 > r2 || (r1 === r2 && c1 > c2)) {
@@ -56,6 +76,14 @@ const SlitherLink = () => {
     setCellCounts(newCounts);
   }, [lines, GRID_SIZE]);
 
+  const showToast = (msg) => {
+    setToast(msg);
+  };
+
+  const clearToast = () => {
+    setToast(null);
+  };
+
   const toggleLine = (r1, c1, r2, c2) => {
     if (showingSolution) return;
     setMessage('');
@@ -80,17 +108,17 @@ const SlitherLink = () => {
     }
 
     if (solutionSet.size !== lines.size) {
-      setMessage('Incorrect: Different number of lines than the solution.');
+      showToast('Incorrect: Different number of lines than the solution.');
       return;
     }
 
     for (const userLine of lines) {
       if (!solutionSet.has(userLine)) {
-        setMessage('Incorrect: One or more lines do not match the solution.');
+        showToast('Incorrect: One or more lines do not match the solution.');
         return;
       }
     }
-    setMessage('Correct! Your solution matches perfectly.');
+    showToast('Correct! Your solution matches perfectly.');
     setShowNextPopup(true);
   };
 
@@ -103,7 +131,7 @@ const SlitherLink = () => {
     }
     setLines(solutionLines);
     setShowingSolution(true);
-    setMessage('Solution revealed.');
+    showToast('Solution revealed.');
   };
 
   const resetPuzzle = () => {
@@ -138,6 +166,60 @@ const SlitherLink = () => {
     setShowingSolution(false);
     setMessage('');
   };
+
+  const handleHint = () => {
+    if (hintCooldown > 0 || showingSolution) return;
+
+    const solutionSet = new Set();
+    for (const { a, b } of currentPuzzle.solution) {
+      const [r1, c1] = a;
+      const [r2, c2] = b;
+      solutionSet.add(getLineKey(r1, c1, r2, c2));
+    }
+
+    // First, remove any incorrect lines
+    const incorrectLines = new Set();
+    for (const line of lines) {
+      if (!solutionSet.has(line)) {
+        incorrectLines.add(line);
+      }
+    }
+
+    if (incorrectLines.size > 0) {
+      setLines(prev => {
+        const newLines = new Set(prev);
+        incorrectLines.forEach(line => newLines.delete(line));
+        return newLines;
+      });
+      showToast('Removed incorrect lines.');
+      return;
+    }
+
+    // If no incorrect lines, add one correct line
+    const correctLines = Array.from(solutionSet).filter(line => !lines.has(line));
+    if (correctLines.length > 0) {
+      const randomCorrectLine = correctLines[Math.floor(Math.random() * correctLines.length)];
+      setLines(prev => new Set([...prev, randomCorrectLine]));
+      showToast('Added a correct line.');
+    }
+
+    // Start cooldown
+    setHintCooldown(10);
+    const timer = setInterval(() => {
+      setHintCooldown(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  // Reset hint cooldown when changing puzzles
+  useEffect(() => {
+    setHintCooldown(0);
+  }, [puzzleIndex]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -273,8 +355,22 @@ const SlitherLink = () => {
           >
             Reset
           </button>
+          <button
+            className={`px-4 py-2 rounded transition-colors ${
+              hintCooldown > 0
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-purple-500 hover:bg-purple-600 text-white'
+            }`}
+            onClick={handleHint}
+            disabled={hintCooldown > 0 || showingSolution}
+          >
+            {hintCooldown > 0 ? `Hint (${hintCooldown}s)` : 'Hint'}
+          </button>
         </div>
       </div>
+
+      {/* Toast Notification */}
+      {toast && <Toast message={toast} onClose={clearToast} />}
 
       {/* Next Puzzle Popup */}
       {showNextPopup && (
