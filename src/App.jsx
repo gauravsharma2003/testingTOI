@@ -175,7 +175,7 @@ const SlitherLink = () => {
                     >
                       {clue !== null && (
                         <span
-                          className={`absolute inset-0 flex items-center justify-center text-xl font-semibold ${
+                          className={`absolute inset-0 flex items-center justify-center text-xl font-semibold select-none ${
                             exceed ? 'text-red-600' : ''
                           }`}
                         >
@@ -258,14 +258,14 @@ const SlitherLink = () => {
             onClick={checkSolution}
             disabled={showingSolution}
           >
-            Check My Solution
+            Check
           </button>
           <button
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
             onClick={showSolution}
             disabled={showingSolution}
           >
-            Show Solution
+            Reveal
           </button>
           <button
             className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
