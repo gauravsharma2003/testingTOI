@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './components/Root';
 import LoopTheLoop from './components/LoopTheLoop';
 import Akari from './components/Akari';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Sudoku from './components/Sudoku';
 
 const router = createBrowserRouter([
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router}>
+      <SpeedInsights />
+    </RouterProvider>
+  );
 }
 
 export default App;
