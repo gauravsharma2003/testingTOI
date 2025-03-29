@@ -56,16 +56,11 @@ const WordRow = () => {
   };
 
   const handleHint = () => {
-    if (hintCooldown > 0 || hintUsed) return;
+    if (hintCooldown > 0) return;
 
     const middleRow = Math.floor(gridSize.rows / 2);
     const startCol = Math.floor((gridSize.cols - currentPuzzle.final_word.length) / 2);
     const endCol = startCol + currentPuzzle.final_word.length - 1;
-
-    // Create a new guessed letters object
-    const newGuessedLetters = { ...guessedLetters };
-    let hintApplied = false;
-    let hintCol = null;
 
     // First try to find an incorrectly guessed letter
     for (let c = startCol; c <= endCol; c++) {
@@ -73,45 +68,53 @@ const WordRow = () => {
       const correctLetter = grid[middleRow][c];
       if (guessedLetter && guessedLetter !== correctLetter) {
         // Replace the incorrect letter with the correct one
-        newGuessedLetters[`${middleRow}-${c}`] = correctLetter;
-        hintApplied = true;
-        hintCol = c;
-        break;
+        setGuessedLetters(prev => ({
+          ...prev,
+          [`${middleRow}-${c}`]: correctLetter
+        }));
+        setHintCooldown(20);
+
+        // Find next unguessed cell
+        let nextCol = null;
+        for (let nextC = startCol; nextC <= endCol; nextC++) {
+          if (nextC !== c && (!guessedLetters[`${middleRow}-${nextC}`] || guessedLetters[`${middleRow}-${nextC}`] !== grid[middleRow][nextC])) {
+            nextCol = nextC;
+            break;
+          }
+        }
+
+        if (nextCol !== null) {
+          setKeyboardLetters({});
+          setSelectedCell({ row: middleRow, col: nextCol });
+        }
+        return;
       }
     }
 
     // If no incorrect letters found, reveal an unguessed letter
-    if (!hintApplied) {
-      for (let c = startCol; c <= endCol; c++) {
-        if (!guessedLetters[`${middleRow}-${c}`]) {
-          // Reveal the letter
-          newGuessedLetters[`${middleRow}-${c}`] = grid[middleRow][c];
-          hintApplied = true;
-          hintCol = c;
-          break;
+    for (let c = startCol; c <= endCol; c++) {
+      if (!guessedLetters[`${middleRow}-${c}`]) {
+        // Reveal the letter
+        setGuessedLetters(prev => ({
+          ...prev,
+          [`${middleRow}-${c}`]: grid[middleRow][c]
+        }));
+        setHintCooldown(20);
+
+        // Find next unguessed cell
+        let nextCol = null;
+        for (let nextC = startCol; nextC <= endCol; nextC++) {
+          if (nextC !== c && (!guessedLetters[`${middleRow}-${nextC}`] || guessedLetters[`${middleRow}-${nextC}`] !== grid[middleRow][nextC])) {
+            nextCol = nextC;
+            break;
+          }
         }
-      }
-    }
 
-    // Only update state if a hint was applied
-    if (hintApplied) {
-      setGuessedLetters(newGuessedLetters);
-      setHintCooldown(20);
-      setHintUsed(true);
-
-      // Find the next unguessed cell after the hint
-      let nextCol = null;
-      for (let c = startCol; c <= endCol; c++) {
-        if (!newGuessedLetters[`${middleRow}-${c}`] || newGuessedLetters[`${middleRow}-${c}`] !== grid[middleRow][c]) {
-          nextCol = c;
-          break;
+        if (nextCol !== null) {
+          setKeyboardLetters({});
+          setSelectedCell({ row: middleRow, col: nextCol });
         }
-      }
-
-      // If we found a next unguessed cell, select it
-      if (nextCol !== null) {
-        setKeyboardLetters({});
-        setSelectedCell({ row: middleRow, col: nextCol });
+        break;
       }
     }
   };
