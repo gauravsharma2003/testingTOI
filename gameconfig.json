@@ -2,7 +2,7 @@
     {
         "name": "Akari",
         "description": "Place bulbs to illuminate the grid while following the rules.",
-        "image": "akari.png",
+        "image": "https://www.nikoli.co.jp/en/wp-content/themes/nikoli_en/images/puzzles/akari03.gif",
         "link": "akari",
         "playcta": "Play Now",
         "gamecolor": "#800080",
@@ -15,7 +15,7 @@
     {
         "name": "Loop The Loop",
         "description": "Connect the dots to create a single loop that doesn't cross itself.",
-        "image": "loop.png",
+        "image": "https://www.nikoli.co.jp/en/wp-content/themes/nikoli_en/images/puzzles/slitherlink03.gif",
         "link": "loop",
         "playcta": "Play Now",
         "gamecolor": "#0000FF",
@@ -27,7 +27,7 @@
     {
         "name": "Mini Sudoku",
         "description": "Fill the grid with numbers following Sudoku rules.",
-        "image": "sudoku.png",
+        "image": "https://www.nikoli.co.jp/en/wp-content/themes/nikoli_en/images/puzzles/sudoku03.gif",
         "link": "sudoku",
         "playcta": "Play Now",
         "gamecolor": "#008000",
@@ -40,7 +40,7 @@
     {
         "name": "Word Row",
         "description": "Write the letters to form a word.",
-        "image": "wordrow.png",
+        "image": null,
         "link": "wordrow",
         "playcta": "Play Now",
         "gamecolor": "#000000",

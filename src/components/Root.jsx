@@ -33,9 +33,19 @@ function Root() {
                 <div className="p-8">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center`} style={{ backgroundColor: `${game.gamecolor}20` }}>
-                        <span className="text-xl font-bold" style={{ color: game.gamecolor }}>{game.name[0]}</span>
-                      </div>
+                      {game.image ? (
+                        <div className="w-10 h-10 rounded-lg overflow-hidden">
+                          <img 
+                            src={game.image} 
+                            alt={game.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center`} style={{ backgroundColor: `${game.gamecolor}20` }}>
+                          <span className="text-xl font-bold" style={{ color: game.gamecolor }}>{game.name[0]}</span>
+                        </div>
+                      )}
                       <h3 className="text-xl font-semibold" style={{ color: game.gamecolor }}>{game.name}</h3>
                     </div>
                     <div className="relative">
