@@ -302,15 +302,15 @@ const SlitherLink = () => {
                       )}
 
                       {/* Dots in corners */}
-                      <div className="absolute top-0 left-0 w-2.5 h-2.5 -ml-[5px] -mt-[5px] bg-black rounded-full shadow-sm" />
+                      <div className="absolute top-0.5 left-0.5 w-2.5 h-2.5 -ml-[5px] -mt-[5px] bg-black rounded-full shadow-sm" />
                       {col === GRID_SIZE - 1 && (
-                        <div className="absolute top-0 right-0 w-2.5 h-2.5 -mr-[5px] -mt-[5px] bg-black rounded-full shadow-sm" />
+                        <div className="absolute top-0.5 right-0.5 w-2.5 h-2.5 -mr-[5px] -mt-[5px] bg-black rounded-full shadow-sm" />
                       )}
                       {row === GRID_SIZE - 1 && (
-                        <div className="absolute bottom-0 left-0 w-2.5 h-2.5 -ml-[5px] -mb-[5px] bg-black rounded-full shadow-sm" />
+                        <div className="absolute bottom-0.5 left-0.5 w-2.5 h-2.5 -ml-[5px] -mb-[5px] bg-black rounded-full shadow-sm" />
                       )}
                       {row === GRID_SIZE - 1 && col === GRID_SIZE - 1 && (
-                        <div className="absolute bottom-0 right-0 w-2.5 h-2.5 -mr-[5px] -mb-[5px] bg-black rounded-full shadow-sm" />
+                        <div className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 -mr-[5px] -mb-[5px] bg-black rounded-full shadow-sm" />
                       )}
                     </div>
                   );
@@ -322,7 +322,7 @@ const SlitherLink = () => {
 
         {/* Add a puzzle counter */}
         <div className="mt-4 text-center text-gray-600">
-          Puzzle {puzzleIndex + 1} of {puzzles.length}
+          Puzzle #{puzzleIndex + 1} 
         </div>
       </div>
 
