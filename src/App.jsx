@@ -223,24 +223,16 @@ const SlitherLink = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg relative">
-        {/* Reload Button */}
-        <button
-          className="absolute top-4 right-4 px-3 py-1 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors text-sm font-medium"
-          onClick={handleRefreshPuzzle}
-        >
-          ↻ 
-        </button>
-
+      <div className="bg-white p-8 rounded-lg shadow-lg">
         {message && (
           <div className="mb-4 p-4 bg-yellow-100 text-gray-800 rounded-lg">
             {message}
           </div>
         )}
 
-        {/* Puzzle Grid */}
-        <div className="relative mb-6 flex justify-center">
-          <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-inner">
+        {/* Puzzle Grid Container */}
+        <div className="w-[300px] h-[300px] flex justify-center items-center mb-6">
+          <div className="relative bg-white p-4 rounded-lg shadow-inner">
             {Array.from({ length: GRID_SIZE }, (_, row) => (
               <div key={row} className="flex">
                 {Array.from({ length: GRID_SIZE }, (_, col) => {
@@ -253,7 +245,7 @@ const SlitherLink = () => {
                     <div
                       key={col}
                       className="relative"
-                      style={{ width: '50px', height: '50px' }}
+                      style={{ width: `${300/GRID_SIZE}px`, height: `${300/GRID_SIZE}px` }}
                     >
                       {clue !== null && (
                         <span
@@ -332,41 +324,47 @@ const SlitherLink = () => {
         <div className="mt-4 text-center text-gray-600">
           Puzzle {puzzleIndex + 1} of {puzzles.length}
         </div>
+      </div>
 
-        {/* Buttons */}
-        <div className="flex gap-2 justify-center flex-wrap">
-          <button
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-            onClick={checkSolution}
-            disabled={showingSolution}
-          >
-            Check
-          </button>
-          <button
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-            onClick={showSolution}
-            disabled={showingSolution}
-          >
-            Reveal
-          </button>
-          <button
-            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
-            onClick={resetPuzzle}
-          >
-            Reset
-          </button>
-          <button
-            className={`px-4 py-2 rounded transition-colors ${
-              hintCooldown > 0
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-purple-500 hover:bg-purple-600 text-white'
-            }`}
-            onClick={handleHint}
-            disabled={hintCooldown > 0 || showingSolution}
-          >
-            {hintCooldown > 0 ? `Hint (${hintCooldown}s)` : 'Hint'}
-          </button>
-        </div>
+      {/* Buttons Container */}
+      <div className="mt-4 flex gap-2 justify-center flex-wrap">
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          onClick={checkSolution}
+          disabled={showingSolution}
+        >
+          Check
+        </button>
+        <button
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          onClick={showSolution}
+          disabled={showingSolution}
+        >
+          Reveal
+        </button>
+        <button
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+          onClick={resetPuzzle}
+        >
+          Reset
+        </button>
+        <button
+          className={`px-4 py-2 rounded transition-colors ${
+            hintCooldown > 0
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-purple-500 hover:bg-purple-600 text-white'
+          }`}
+          onClick={handleHint}
+          disabled={hintCooldown > 0 || showingSolution}
+        >
+          {hintCooldown > 0 ? `Hint (${hintCooldown}s)` : 'Hint'}
+        </button>
+        <button
+          className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
+          onClick={handleRefreshPuzzle}
+        >
+          New Puzzle
+        </button>
       </div>
 
       {/* Toast Notification */}
