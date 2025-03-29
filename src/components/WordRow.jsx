@@ -196,6 +196,9 @@ const WordRow = () => {
     
     setGrid(emptyGrid);
     setIsLoading(false);
+
+    // Select the first position automatically
+    setSelectedCell({ row: middleRow, col: startCol });
   };
 
   const handleCellClick = (row, col) => {
