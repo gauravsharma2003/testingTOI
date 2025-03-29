@@ -46,6 +46,9 @@ const Akari = () => {
   // Add state for invalid bulb positions
   const [invalidBulbs, setInvalidBulbs] = useState([]);
 
+  // Add state for wall number statuses
+  const [wallNumberStatuses, setWallNumberStatuses] = useState({});
+
   // Initialize user solution with walls
   useEffect(() => {
     const newSolution = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill(0));
@@ -176,12 +179,35 @@ const Akari = () => {
     setInvalidBulbs([...new Set(invalid)]); // Remove duplicates
   };
 
-  // Check if a cell is a wall with a number
+  // Update wall number statuses whenever user solution changes
+  useEffect(() => {
+    const newStatuses = {};
+    currentPuzzle.numbers.forEach(({ x, y, n }) => {
+      const adjacentCells = [
+        [y-1, x], [y+1, x], [y, x-1], [y, x+1]
+      ].filter(([r, c]) => 
+        r >= 0 && r < GRID_SIZE && c >= 0 && c < GRID_SIZE
+      );
+      
+      const adjacentBulbs = adjacentCells.filter(([r, c]) => userSolution[r][c] === 2).length;
+      
+      newStatuses[`${y}-${x}`] = adjacentBulbs === n ? 'correct' : 
+                                adjacentBulbs > n ? 'incorrect' : 'default';
+    });
+    setWallNumberStatuses(newStatuses);
+  }, [userSolution, currentPuzzle.numbers, GRID_SIZE]);
+
+  // Check if a cell is a wall with a number and get its status
   const getWallNumber = (row, col) => {
     const wallInfo = currentPuzzle.numbers.find(
       (item) => item.x === col && item.y === row
     );
-    return wallInfo ? wallInfo.n : null;
+    if (!wallInfo) return null;
+
+    return {
+      number: wallInfo.n,
+      status: wallNumberStatuses[`${row}-${col}`] || 'default'
+    };
   };
 
   // Check if current solution is valid
@@ -451,7 +477,7 @@ const Akari = () => {
     const isIlluminated = illuminatedCells.includes(`${row}-${col}`);
     
     if (isWall) {
-      return "bg-gray-800 text-white";
+      return "bg-gray-800";
     } else if (isIlluminated) {
       return "bg-yellow-100";
     } else if (isCross) {
@@ -480,7 +506,15 @@ const Akari = () => {
                     className={`relative border border-gray-300 flex items-center justify-center ${cellClass}`}
                     onClick={() => handleCellClick(row, col)}
                   >
-                    {wallNumber !== null && wallNumber}
+                    {wallNumber !== null && (
+                      <span className={`${
+                        wallNumber.status === 'correct' ? 'text-green-400' :
+                        wallNumber.status === 'incorrect' ? 'text-red-400' :
+                        'text-white'
+                      }`}>
+                        {wallNumber.number}
+                      </span>
+                    )}
                     {userSolution[row][col] === 2 && (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className={`w-6 h-6 rounded-full shadow-lg ${isInvalid ? 'bg-red-500' : 'bg-yellow-500'}`}></div>
