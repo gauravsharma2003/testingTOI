@@ -250,7 +250,7 @@ const LoopTheLoop = () => {
                       {clue !== null && (
                         <span
                           className={`absolute inset-0 flex items-center justify-center text-xl font-semibold select-none ${
-                            exceed ? 'text-red-600' : ''
+                            exceed ? 'text-red-600' : (count === clue && clue !== 0) ? 'text-green-600' : ''
                           }`}
                         >
                           {clue}
