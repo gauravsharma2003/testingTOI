@@ -36,5 +36,18 @@
             "Each row, column, and MxM subgrid must contain all numbers 1 to M exactly once.",
             "No number can appear twice in any row, column, or subgrid."
         ]
+    },
+    {
+        "name": "Word Row",
+        "description": "Write the letters to form a word.",
+        "image": "wordrow.png",
+        "link": "wordrow",
+        "playcta": "Play Now",
+        "gamecolor": "#000000",
+        "howtoplay": [
+            "Write the letters to form a word.",
+            "The word must be a single continuous line.",
+            "The word should make sense vertically and horizontally."
+        ]
     }
 ]

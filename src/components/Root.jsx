@@ -40,7 +40,7 @@ function Root() {
                     </div>
                     <div className="relative">
                       <button 
-                        className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-white text-gray-400 hover:text-gray-600 text-sm"
+                        className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-white text-black hover:text-gray-800"
                         onMouseEnter={(e) => {
                           e.currentTarget.nextElementSibling.classList.remove('invisible', 'opacity-0');
                         }}
@@ -49,7 +49,20 @@ function Root() {
                         }}
                         onClick={() => setSelectedGame(game)}
                       >
-                        i
+                        <svg 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          strokeWidth="2" 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          className="w-4 h-4"
+                        >
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="16" x2="12" y2="12" />
+                          <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
                       </button>
                       <div className="absolute right-0 mt-1 w-32 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 invisible transition-all duration-200 z-10">
                         How to Play

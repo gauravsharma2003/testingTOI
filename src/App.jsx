@@ -6,7 +6,7 @@ import Akari from './components/Akari';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import Sudoku from './components/Sudoku';
-
+import WordRow from './components/WordRow';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/sudoku",
     element: <Sudoku />,
+  },
+  {
+    path: "/wordrow",
+    element: <WordRow />,
   },
 ]);
 
