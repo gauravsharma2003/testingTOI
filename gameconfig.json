@@ -1,0 +1,40 @@
+[
+    {
+        "name": "Akari",
+        "description": "Place bulbs to illuminate the grid while following the rules.",
+        "image": "akari.png",
+        "link": "akari",
+        "playcta": "Play Now",
+        "gamecolor": "#800080",
+        "howtoplay": [
+            "Place bulbs to illuminate the grid while following the rules.",
+            "Each bulb can only illuminate cells in a straight line (up, down, left, right) without crossing other bulbs.",
+            "A cell with a cross ('X') can be illuminated by bulbs from both the left and right, or up and down."
+        ]
+    },
+    {
+        "name": "Loop The Loop",
+        "description": "Connect the dots to create a single loop that doesn't cross itself.",
+        "image": "loop.png",
+        "link": "loop",
+        "playcta": "Play Now",
+        "gamecolor": "#0000FF",
+        "howtoplay": [
+            "Connect the dots to create a single loop that doesn't cross itself.",
+            "The loop must be a single continuous line, without any breaks or crossings."
+        ]
+    },
+    {
+        "name": "Mini Sudoku",
+        "description": "Fill the grid with numbers following Sudoku rules.",
+        "image": "sudoku.png",
+        "link": "sudoku",
+        "playcta": "Play Now",
+        "gamecolor": "#008000",
+        "howtoplay": [
+            "Fill the grid with numbers following Sudoku rules.",
+            "Each row, column, and MxM subgrid must contain all numbers 1 to M exactly once.",
+            "No number can appear twice in any row, column, or subgrid."
+        ]
+    }
+]
