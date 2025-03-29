@@ -259,7 +259,7 @@ const LoopTheLoop = () => {
 
                       {/* Top edge: (row,col) -> (row,col+1) */}
                       <button
-                        className={`absolute top-0 left-0 right-0 h-1 cursor-pointer ${
+                        className={`absolute top-0 left-0 right-0 h-1.5 cursor-pointer ${
                           hasLine(row, col, row, col + 1)
                             ? 'bg-blue-600'
                             : 'bg-gray-300 hover:bg-blue-400'
@@ -269,7 +269,7 @@ const LoopTheLoop = () => {
 
                       {/* Left edge: (row,col) -> (row+1,col) */}
                       <button
-                        className={`absolute top-0 left-0 bottom-0 w-1 cursor-pointer ${
+                        className={`absolute top-0 left-0 bottom-0 w-1.5 cursor-pointer ${
                           hasLine(row, col, row + 1, col)
                             ? 'bg-blue-600'
                             : 'bg-gray-300 hover:bg-blue-400'
@@ -280,7 +280,7 @@ const LoopTheLoop = () => {
                       {/* Right edge: (row,col+1) -> (row+1,col+1) for the last col */}
                       {col === GRID_SIZE - 1 && (
                         <button
-                          className={`absolute top-0 right-0 bottom-0 w-1 cursor-pointer ${
+                          className={`absolute top-0 right-0 bottom-0 w-1.5 cursor-pointer ${
                             hasLine(row, col + 1, row + 1, col + 1)
                               ? 'bg-blue-600'
                               : 'bg-gray-300 hover:bg-blue-400'
@@ -292,7 +292,7 @@ const LoopTheLoop = () => {
                       {/* Bottom edge: (row+1,col) -> (row+1,col+1) for the last row */}
                       {row === GRID_SIZE - 1 && (
                         <button
-                          className={`absolute bottom-0 left-0 right-0 h-1 cursor-pointer ${
+                          className={`absolute bottom-0 left-0 right-0 h-1.5 cursor-pointer ${
                             hasLine(row + 1, col, row + 1, col + 1)
                               ? 'bg-blue-600'
                               : 'bg-gray-300 hover:bg-blue-400'
@@ -321,7 +321,7 @@ const LoopTheLoop = () => {
         </div>
 
         {/* Add a puzzle counter */}
-        <div className="mt-4 text-center text-gray-600">
+        <div className="mt-4 text-center text-gray-600 select-none">
           Puzzle #{puzzleIndex + 1} 
         </div>
       </div>
@@ -329,27 +329,27 @@ const LoopTheLoop = () => {
       {/* Buttons Container */}
       <div className="mt-4 flex gap-2 justify-center flex-wrap">
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors select-none"
           onClick={checkSolution}
           disabled={showingSolution}
         >
           Check
         </button>
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors select-none"
           onClick={showSolution}
           disabled={showingSolution}
         >
           Reveal
         </button>
         <button
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors select-none"
           onClick={resetPuzzle}
         >
           Reset
         </button>
         <button
-          className={`px-4 py-2 rounded transition-colors ${
+          className={`px-4 py-2 rounded transition-colors select-none ${
             hintCooldown > 0
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-purple-500 hover:bg-purple-600 text-white'
@@ -360,7 +360,7 @@ const LoopTheLoop = () => {
           {hintCooldown > 0 ? `Hint (${hintCooldown}s)` : 'Hint'}
         </button>
         <button
-          className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
+          className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors select-none"
           onClick={handleRefreshPuzzle}
         >
           New Puzzle
@@ -374,10 +374,10 @@ const LoopTheLoop = () => {
       {showNextPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4">
-            <h2 className="text-2xl font-bold mb-4 text-center">Congratulations!</h2>
-            <p className="text-center mb-6">You've solved the puzzle correctly!</p>
+            <h2 className="text-2xl font-bold mb-4 text-center select-none">Congratulations!</h2>
+            <p className="text-center mb-6 select-none">You've solved the puzzle correctly!</p>
             <button
-              className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+              className="w-full px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors select-none"
               onClick={handleNextPuzzle}
             >
               Next Puzzle
