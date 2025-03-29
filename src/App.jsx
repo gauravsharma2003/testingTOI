@@ -1,14 +1,27 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './components/Root';
 import LoopTheLoop from './components/LoopTheLoop';
-import Sudoku from './components/Sudoku';
 import Akari from './components/Akari';
+import Sudoku from './components/Sudoku';
+
 const router = createBrowserRouter([
-  { path: "/", Component: Root },
-  { path: "/loop", Component: LoopTheLoop },
-  { path: "/sudoku", Component: Sudoku },
-  { path: "/akari", Component: Akari }
+  {
+    path: "/",
+    element: <Root />,
+  },
+  {
+    path: "/loop",
+    element: <LoopTheLoop />,
+  },
+  {
+    path: "/akari",
+    element: <Akari />,
+  },
+  {
+    path: "/sudoku",
+    element: <Sudoku />,
+  },
 ]);
 
 function App() {
