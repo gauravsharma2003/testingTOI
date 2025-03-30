@@ -49,5 +49,18 @@
             "The word must be a single continuous line.",
             "The word should make sense vertically and horizontally."
         ]
+    },
+    {
+        "name": "Memory Man",
+        "description": "Memorize the numbers on the cards and flip them in sequence to win.",
+        "image": null,
+        "link": "memoryman",
+        "playcta": "Play Now",
+        "gamecolor": "#6B46C1",
+        "howtoplay":[
+            "Memorize the numbers on the cards and flip them in sequence to win.",
+            "Click on the cards to flip them.",
+            "Wrong guess will reset the game."
+        ]
     }
 ]

@@ -7,6 +7,8 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import Sudoku from './components/Sudoku';
 import WordRow from './components/WordRow';
+import MemoryMan from './components/MemoryMan';  
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
     path: "/wordrow",
     element: <WordRow />,
   },
+  {
+    path : "/memoryman",
+    element: <MemoryMan />
+  }
 ]);
 
 function App() {
