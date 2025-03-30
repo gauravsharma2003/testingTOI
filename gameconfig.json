@@ -40,10 +40,10 @@
     {
         "name": "Word Row",
         "description": "Write the letters to form a word.",
-        "image": null,
+        "image": "https://www.washingtonpost.com/red-static/keyword/v1.13.2/_next/static/media/logo.98dd5f0b.svg",
         "link": "wordrow",
         "playcta": "Play Now",
-        "gamecolor": "#000000",
+        "gamecolor": "#ff637e",
         "howtoplay": [
             "Write the letters to form a word.",
             "The word must be a single continuous line.",
@@ -53,7 +53,7 @@
     {
         "name": "Memory Man",
         "description": "Memorize the numbers on the cards and flip them in sequence to win.",
-        "image": null,
+        "image": "https://i.imgur.com/hnnRTrC.png",
         "link": "memoryman",
         "playcta": "Play Now",
         "gamecolor": "#6B46C1",
