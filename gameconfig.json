@@ -5,7 +5,7 @@
         "image": "https://www.nikoli.co.jp/en/wp-content/themes/nikoli_en/images/puzzles/akari03.gif",
         "link": "akari",
         "playcta": "Play Now",
-        "gamecolor": "#800080",
+        "gamecolor": "#ec2c00",
         "howtoplay": [
             "Place bulbs to illuminate the grid while following the rules.",
             "Each bulb can only illuminate cells in a straight line (up, down, left, right) without crossing other bulbs.",
@@ -18,7 +18,7 @@
         "image": "https://www.nikoli.co.jp/en/wp-content/themes/nikoli_en/images/puzzles/slitherlink03.gif",
         "link": "loop",
         "playcta": "Play Now",
-        "gamecolor": "#0000FF",
+        "gamecolor": "#3182CE",
         "howtoplay": [
             "Connect the dots to create a single loop that doesn't cross itself.",
             "The loop must be a single continuous line, without any breaks or crossings."
@@ -30,7 +30,7 @@
         "image": "https://www.nikoli.co.jp/en/wp-content/themes/nikoli_en/images/puzzles/sudoku03.gif",
         "link": "sudoku",
         "playcta": "Play Now",
-        "gamecolor": "#008000",
+        "gamecolor": "#00875b",
         "howtoplay": [
             "Fill the grid with numbers following Sudoku rules.",
             "Each row, column, and MxM subgrid must contain all numbers 1 to M exactly once.",
