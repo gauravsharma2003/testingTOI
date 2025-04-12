@@ -11,39 +11,81 @@ function Whosthat() {
   const [roundComplete, setRoundComplete] = useState(false);
   const [options, setOptions] = useState([]);
   const [hintsRevealed, setHintsRevealed] = useState(1);
+  const [wrongGuesses, setWrongGuesses] = useState([]);
+  const [toast, setToast] = useState({ show: false, message: '' });
 
   const currentPlayer = whosthat.roundsInfo[currentRound];
   const totalRounds = whosthat.roundsInfo.length;
 
+  const showToast = (message) => {
+    setToast({ show: true, message });
+    setTimeout(() => setToast({ show: false, message: '' }), 2000);
+  };
+
   useEffect(() => {
     const allPlayers = [...whosthat.playersList];
     const correctPlayer = currentPlayer.playerName;
+    const correctInitial = correctPlayer.charAt(0);
+    
+    // Find players with same initial
+    const sameInitialPlayers = allPlayers.filter(
+      player => player !== correctPlayer && player.charAt(0) === correctInitial
+    );
+    
+    // Get one player with same initial
+    const sameInitialPlayer = sameInitialPlayers.length > 0 
+      ? sameInitialPlayers[Math.floor(Math.random() * sameInitialPlayers.length)]
+      : null;
+    
+    // Get other random players
     const otherOptions = allPlayers
-      .filter(player => player !== correctPlayer)
+      .filter(player => 
+        player !== correctPlayer && 
+        player !== sameInitialPlayer &&
+        player.charAt(0) !== correctInitial
+      )
       .sort(() => 0.5 - Math.random())
-      .slice(0, 4);
+      .slice(0, sameInitialPlayer ? 3 : 4);
     
-    const allOptions = [...otherOptions, correctPlayer]
-      .sort(() => 0.5 - Math.random());
+    // Combine options
+    const allOptions = sameInitialPlayer 
+      ? [...otherOptions, sameInitialPlayer, correctPlayer]
+      : [...otherOptions, correctPlayer];
     
-    setOptions(allOptions);
+    // Shuffle the options
+    const shuffledOptions = allOptions.sort(() => 0.5 - Math.random());
+    
+    setOptions(shuffledOptions);
     setGuessesLeft(3);
     setSelectedOption(null);
     setShowHints([true, false, false, false, false]);
     setHintsRevealed(1);
     setRoundComplete(false);
+    setWrongGuesses([]);
   }, [currentRound]);
 
   const handleOptionSelect = (option) => {
-    if (roundComplete || gameOver) return;
+    if (roundComplete || gameOver || wrongGuesses.includes(option)) return;
     
-    setSelectedOption(option);
     if (option === currentPlayer.playerName) {
+      setSelectedOption(option);
       const roundScore = guessesLeft === 3 ? 100 : 100 - (3 - guessesLeft) * 20;
       setScore(score + roundScore);
       setRoundComplete(true);
     } else {
+      setWrongGuesses(prev => [...prev, option]);
       setGuessesLeft(guessesLeft - 1);
+      showToast('Wrong guess! A new hint is revealed.');
+      
+      if (hintsRevealed < currentPlayer.hints.length) {
+        setShowHints(prev => {
+          const newHints = [...prev];
+          newHints[hintsRevealed] = true;
+          return newHints;
+        });
+        setHintsRevealed(prev => prev + 1);
+      }
+      
       if (guessesLeft <= 1) {
         setRoundComplete(true);
       }
@@ -147,7 +189,7 @@ function Whosthat() {
             )}
             
             {/* Right Arrow */}
-            {hintsRevealed < currentPlayer.hints.length && (
+            {hintsRevealed < currentPlayer.hints.length && showHints[hintsRevealed] && (
               <button
                 onClick={() => setHintsRevealed(prev => prev + 1)}
                 className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 bg-orange-600/80 hover:bg-orange-700 text-white rounded-full w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center transition-colors"
@@ -164,27 +206,10 @@ function Whosthat() {
                     showHints[index] && index === hintsRevealed - 1 ? 'animate-shimmer' : ''
                   } ${index === hintsRevealed - 1 ? 'block' : 'hidden'}`}
                 >
-                  {showHints[index] ? (
-                    <div 
-                      className="text-sm sm:text-base text-gray-800 bg-orange-100/90 border-2 border-orange-300 p-3 sm:p-4 rounded-xl"
-                      dangerouslySetInnerHTML={{ __html: hint }} 
-                    />
-                  ) : (
-                    <button
-                      onClick={() => {
-                        setShowHints(prev => {
-                          const newHints = [...prev];
-                          newHints[index] = true;
-                          return newHints;
-                        });
-                        setHintsRevealed(index + 1);
-                      }}
-                      className="w-full flex items-center justify-between bg-white/5 p-3 sm:p-4 rounded-xl hover:bg-white/10 transition-colors"
-                    >
-                      <span className="text-white text-sm sm:text-base">Hint {index + 1}</span>
-                      <span className="text-orange-300 text-sm sm:text-base">Tap to Reveal</span>
-                    </button>
-                  )}
+                  <div 
+                    className="text-sm sm:text-base text-gray-800 bg-orange-100/90 border-2 border-orange-300 p-3 sm:p-4 rounded-xl"
+                    dangerouslySetInnerHTML={{ __html: hint }} 
+                  />
                 </div>
               ))}
             </div>
@@ -211,18 +236,20 @@ function Whosthat() {
               <button
                 key={index}
                 className={`p-2 sm:p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] text-sm sm:text-base ${
-                  selectedOption === option
-                    ? option === currentPlayer.playerName
-                      ? 'bg-orange-500 text-white shadow-lg'
-                      : 'bg-red-500 text-white shadow-lg'
-                    : roundComplete
+                  wrongGuesses.includes(option)
+                    ? 'bg-red-500/50 text-white cursor-not-allowed'
+                    : selectedOption === option
                       ? option === currentPlayer.playerName
                         ? 'bg-orange-500 text-white shadow-lg'
-                        : 'bg-white/20 text-white'
-                      : 'bg-white/10 hover:bg-white/20 text-white'
+                        : 'bg-red-500 text-white shadow-lg'
+                      : roundComplete
+                        ? option === currentPlayer.playerName
+                          ? 'bg-orange-500 text-white shadow-lg'
+                          : 'bg-white/20 text-white'
+                        : 'bg-white/10 hover:bg-white/20 text-white'
                 }`}
                 onClick={() => handleOptionSelect(option)}
-                disabled={roundComplete || gameOver}
+                disabled={roundComplete || gameOver || wrongGuesses.includes(option)}
               >
                 {option}
               </button>
@@ -231,18 +258,20 @@ function Whosthat() {
               <button
                 key={4}
                 className={`p-2 sm:p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] w-1/2 text-sm sm:text-base ${
-                  selectedOption === options[4]
-                    ? options[4] === currentPlayer.playerName
-                      ? 'bg-orange-500 text-white shadow-lg'
-                      : 'bg-red-500 text-white shadow-lg'
-                    : roundComplete
+                  wrongGuesses.includes(options[4])
+                    ? 'bg-red-500/50 text-white cursor-not-allowed'
+                    : selectedOption === options[4]
                       ? options[4] === currentPlayer.playerName
                         ? 'bg-orange-500 text-white shadow-lg'
-                        : 'bg-white/20 text-white'
-                      : 'bg-white/10 hover:bg-white/20 text-white'
+                        : 'bg-red-500 text-white shadow-lg'
+                      : roundComplete
+                        ? options[4] === currentPlayer.playerName
+                          ? 'bg-orange-500 text-white shadow-lg'
+                          : 'bg-white/20 text-white'
+                        : 'bg-white/10 hover:bg-white/20 text-white'
                 }`}
                 onClick={() => handleOptionSelect(options[4])}
-                disabled={roundComplete || gameOver}
+                disabled={roundComplete || gameOver || wrongGuesses.includes(options[4])}
               >
                 {options[4]}
               </button>
@@ -270,6 +299,13 @@ function Whosthat() {
             >
               Play Again
             </button>
+          </div>
+        )}
+
+        {/* Toast Notification */}
+        {toast.show && (
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-orange-600 text-white px-4 py-2 rounded-lg shadow-lg animate-fade-in-out">
+            {toast.message}
           </div>
         )}
       </div>
