@@ -90,7 +90,7 @@ function Whosthat() {
 
       <div className="relative z-10 max-w-4xl w-full p-4 sm:p-8">
         {/* Score and Round Info */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-2 mb-4 sm:mb-8">
+        <div className="flex flex-row justify-between items-center w-full mb-4 sm:mb-8">
           <div className="text-xl sm:text-2xl font-bold text-white">Score: {score}</div>
           <div className="flex items-center gap-2">
             <div className="text-lg sm:text-xl font-semibold text-white">
@@ -206,8 +206,8 @@ function Whosthat() {
         {/* Options */}
         <div className="mb-4 sm:mb-6">
           <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Guess the Player</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
-            {options.slice(0, 3).map((option, index) => (
+          <div className="grid grid-cols-2 gap-2 sm:gap-4">
+            {options.slice(0, 4).map((option, index) => (
               <button
                 key={index}
                 className={`p-2 sm:p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] text-sm sm:text-base ${
@@ -227,27 +227,25 @@ function Whosthat() {
                 {option}
               </button>
             ))}
-            <div className="col-span-2 sm:col-span-3 flex justify-center gap-2 sm:gap-4">
-              {options.slice(3).map((option, index) => (
-                <button
-                  key={index + 3}
-                  className={`p-2 sm:p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] w-1/2 sm:w-1/3 text-sm sm:text-base ${
-                    selectedOption === option
-                      ? option === currentPlayer.playerName
+            <div className="col-span-2 flex justify-center">
+              <button
+                key={4}
+                className={`p-2 sm:p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] w-1/2 text-sm sm:text-base ${
+                  selectedOption === options[4]
+                    ? options[4] === currentPlayer.playerName
+                      ? 'bg-orange-500 text-white shadow-lg'
+                      : 'bg-red-500 text-white shadow-lg'
+                    : roundComplete
+                      ? options[4] === currentPlayer.playerName
                         ? 'bg-orange-500 text-white shadow-lg'
-                        : 'bg-red-500 text-white shadow-lg'
-                      : roundComplete
-                        ? option === currentPlayer.playerName
-                          ? 'bg-orange-500 text-white shadow-lg'
-                          : 'bg-white/20 text-white'
-                        : 'bg-white/10 hover:bg-white/20 text-white'
-                  }`}
-                  onClick={() => handleOptionSelect(option)}
-                  disabled={roundComplete || gameOver}
-                >
-                  {option}
-                </button>
-              ))}
+                        : 'bg-white/20 text-white'
+                      : 'bg-white/10 hover:bg-white/20 text-white'
+                }`}
+                onClick={() => handleOptionSelect(options[4])}
+                disabled={roundComplete || gameOver}
+              >
+                {options[4]}
+              </button>
             </div>
           </div>
         </div>
