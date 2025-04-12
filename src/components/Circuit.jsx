@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import wire from '../../../wire.json';
+import wire from '../assets/wire.json';
 
 const DIRECTIONS = {
   TOP: 0,

@@ -1,0 +1,402 @@
+{
+  "grid": [
+      [
+          {
+              "row": 0,
+              "col": 0,
+              "type": "start",
+              "connections": [
+                  false,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u26a1",
+              "piece": null
+          },
+          {
+              "row": 0,
+              "col": 1,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 0,
+              "col": 2,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 0,
+              "col": 3,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 0,
+              "col": 4,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          }
+      ],
+      [
+          {
+              "row": 1,
+              "col": 0,
+              "type": "wire",
+              "piece": "corner",
+              "connections": [
+                  true,
+                  false,
+                  false,
+                  true
+              ],
+              "rotation": 3,
+              "pattern": "\u2514"
+          },
+          {
+              "row": 1,
+              "col": 1,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  false,
+                  true,
+                  false,
+                  true
+              ],
+              "rotation": 1,
+              "pattern": "\u2500"
+          },
+          {
+              "row": 1,
+              "col": 2,
+              "type": "wire",
+              "piece": "corner",
+              "connections": [
+                  true,
+                  false,
+                  false,
+                  true
+              ],
+              "rotation": 3,
+              "pattern": "\u2514"
+          },
+          {
+              "row": 1,
+              "col": 3,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 1,
+              "col": 4,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          }
+      ],
+      [
+          {
+              "row": 2,
+              "col": 0,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 2,
+              "col": 1,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 2,
+              "col": 2,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 2,
+              "col": 3,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 2,
+              "col": 4,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          }
+      ],
+      [
+          {
+              "row": 3,
+              "col": 0,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 3,
+              "col": 1,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 3,
+              "col": 2,
+              "type": "wire",
+              "piece": "corner",
+              "connections": [
+                  true,
+                  false,
+                  false,
+                  true
+              ],
+              "rotation": 3,
+              "pattern": "\u2514"
+          },
+          {
+              "row": 3,
+              "col": 3,
+              "type": "wire",
+              "piece": "corner",
+              "connections": [
+                  true,
+                  false,
+                  false,
+                  true
+              ],
+              "rotation": 3,
+              "pattern": "\u2514"
+          },
+          {
+              "row": 3,
+              "col": 4,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          }
+      ],
+      [
+          {
+              "row": 4,
+              "col": 0,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 4,
+              "col": 1,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 4,
+              "col": 2,
+              "type": "wire",
+              "piece": "straight",
+              "connections": [
+                  true,
+                  false,
+                  true,
+                  false
+              ],
+              "rotation": 0,
+              "pattern": "\u2502"
+          },
+          {
+              "row": 4,
+              "col": 3,
+              "type": "wire",
+              "piece": "corner",
+              "connections": [
+                  true,
+                  false,
+                  false,
+                  true
+              ],
+              "rotation": 3,
+              "pattern": "\u2514"
+          },
+          {
+              "row": 4,
+              "col": 4,
+              "type": "end",
+              "connections": [
+                  false,
+                  false,
+                  false,
+                  true
+              ],
+              "rotation": 0,
+              "pattern": "\ud83d\udca1",
+              "piece": null
+          }
+      ]
+  ],
+  "solutionPath": [
+      [
+          0,
+          0
+      ],
+      [
+          1,
+          0
+      ],
+      [
+          1,
+          1
+      ],
+      [
+          1,
+          2
+      ],
+      [
+          2,
+          2
+      ],
+      [
+          3,
+          2
+      ],
+      [
+          3,
+          3
+      ],
+      [
+          4,
+          3
+      ],
+      [
+          4,
+          4
+      ]
+  ]
+}
