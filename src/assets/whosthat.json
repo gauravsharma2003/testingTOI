@@ -47,16 +47,74 @@
             "hints": [
               "Hint 1: Young Sri Lankan pacer with a unique, slingy bowling action reminiscent of Lasith Malinga.",
               "Hint 2: Right-arm fast bowler generating good pace and difficult angles, specializing in death overs.",
-              "Hint 3: Became a key strike bowler for Chennai Super Kings, often trusted in crucial end-game situations."
+              "Hint 3: The initials of his name is M_______"
             ],
             "options": [
               "Matheesha Pathirana",
-              "Lasith Malinga",
-              "Nuwan Thushara",
+              "Musheer Khan",
+              "Mohit Sharma",
               "Mustafizur Rahman",
               "Tushar Deshpande"
             ]
-          }      
+          },
+          {
+            "playerName": "Rohit Sharma",
+            "playerNumber": "45",
+            "jerseyImageUrl": "https://static.toiimg.com/photo/118960928.cms",
+            "teamName": "Mumbai",
+            "jerseyTextColor": "#F6F6F6",
+            "hints": [
+              "Hint 1: Architect of an IPL dynasty, leading this franchise to a stunning five championship titles between 2013 and 2020.",
+              "Hint 2: India's current Test/ODI captain; known as the 'Hitman' for his signature pull shot and opening prowess.",
+              "Hint 3: Joint world record holder for the most centuries (5) in T20 Internationals."
+            ],
+            "options": [
+              "Rohit Sharma",
+              "Hardik Pandya",
+              "Jasprit Bumrah",
+              "Virat Kohli",
+              "MS Dhoni"
+            ]
+          },
+          {
+            "playerName": "Axar Patel",
+            "playerNumber": "10",
+            "jerseyImageUrl": "https://static.toiimg.com/photo/118960924.cms",
+            "teamName": "Delhi",
+            "jerseyTextColor": "#F6F6F6",
+            "hints": [
+              "Hint 1: Made a stunning Test debut against England in 2021, grabbing a five-wicket haul in Chennai.",
+              "Hint 2: Left-arm spinner and capable batsman for India; appointed captain of Delhi Capitals for IPL 2025.",
+              "Hint 3: Known as 'Bapu'; lauded for his economical bowling in white-ball cricket."
+            ],
+            "options": [
+              "Axar Patel",
+              "Ravindra Jadeja",
+              "Kuldeep Yadav",
+              "Washington Sundar",
+              "KL Rahul"
+            ]
+          },
+          {
+            "playerName": "Riyan Parag",
+            "playerNumber": "43",
+            "jerseyImageUrl": "https://static.toiimg.com/photo/118960938.cms",
+            "teamName": "Rajasthan",
+            "jerseyTextColor": "#F6F6F6",
+            "hints": [
+              "Hint 1: In 2019, playing for RR, he became the youngest player at that time to score an IPL half-century.",
+              "Hint 2: An energetic batting all-rounder from Assam; bats right-handed and bowls handy leg-spin/off-spin.",
+              "Hint 3: Recognised for his unique 'Bihu dance' celebration and plays a crucial role as a finisher for the Royals."
+            ],
+            "options": [
+              "Riyan Parag",
+              "Yashasvi Jaiswal",
+              "Shubham Dubey",
+              "Dhruv Jurel",
+              "Rahul Tewatia"
+            ]
+          }
+            
     ],
     "backgroundImageUrl": "https://static.toiimg.com/photo/119199147.cms",
     "userInputTitleText": "Guess the Player",
