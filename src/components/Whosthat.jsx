@@ -12,6 +12,7 @@ function Whosthat() {
   const [wrongGuesses, setWrongGuesses] = useState([]);
   const [fadingOutGuesses, setFadingOutGuesses] = useState([]);
   const [toast, setToast] = useState({ show: false, message: '' });
+  const [shuffledOptions, setShuffledOptions] = useState([]);
 
   const currentPlayer = whosthat.roundsInfo[currentRound];
   const totalRounds = whosthat.roundsInfo.length;
@@ -22,6 +23,14 @@ function Whosthat() {
   };
 
   useEffect(() => {
+    // Shuffle the options for the current round
+    const options = [...currentPlayer.options];
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+    setShuffledOptions(options);
+
     setGuessesLeft(3);
     setSelectedOption(null);
     setShowHints([true, false, false, false, false]);
@@ -29,7 +38,7 @@ function Whosthat() {
     setRoundComplete(false);
     setWrongGuesses([]);
     setFadingOutGuesses([]);
-  }, [currentRound]);
+  }, [currentRound, currentPlayer.options]);
 
   const handleOptionSelect = (option) => {
     if (roundComplete || wrongGuesses.includes(option) || fadingOutGuesses.includes(option)) return;
@@ -208,7 +217,7 @@ function Whosthat() {
         <div className="mb-4 sm:mb-6">
           <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Guess the Player</h3>
           <div className="grid grid-cols-2 gap-2 sm:gap-4">
-            {currentPlayer.options
+            {shuffledOptions
               .filter(option => !wrongGuesses.includes(option))
               .slice(0, 4)
               .map((option, index) => (
@@ -233,29 +242,29 @@ function Whosthat() {
                   {option}
                 </button>
               ))}
-            {currentPlayer.options
+            {shuffledOptions
               .filter(option => !wrongGuesses.includes(option))
               .length > 4 && (
               <div className="col-span-2 flex justify-center">
                 <button
                   key={4}
                   className={`p-2 sm:p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] w-1/2 text-sm sm:text-base ${
-                    fadingOutGuesses.includes(currentPlayer.options[4])
+                    fadingOutGuesses.includes(shuffledOptions[4])
                       ? 'bg-red-500 text-white animate-fade-out'
-                      : selectedOption === currentPlayer.options[4]
-                        ? currentPlayer.options[4] === currentPlayer.playerName
+                      : selectedOption === shuffledOptions[4]
+                        ? shuffledOptions[4] === currentPlayer.playerName
                           ? 'bg-orange-500 text-white shadow-lg'
                           : 'bg-red-500 text-white shadow-lg'
                         : roundComplete
-                          ? currentPlayer.options[4] === currentPlayer.playerName
+                          ? shuffledOptions[4] === currentPlayer.playerName
                             ? 'bg-orange-500 text-white shadow-lg'
                             : 'bg-white/20 text-white'
                           : 'bg-white/10 hover:bg-white/20 text-white'
                   }`}
-                  onClick={() => handleOptionSelect(currentPlayer.options[4])}
-                  disabled={roundComplete || fadingOutGuesses.includes(currentPlayer.options[4])}
+                  onClick={() => handleOptionSelect(shuffledOptions[4])}
+                  disabled={roundComplete || fadingOutGuesses.includes(shuffledOptions[4])}
                 >
-                  {currentPlayer.options[4]}
+                  {shuffledOptions[4]}
                 </button>
               </div>
             )}
