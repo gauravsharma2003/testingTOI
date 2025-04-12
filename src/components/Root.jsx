@@ -6,7 +6,7 @@ function Root() {
   const [selectedGame, setSelectedGame] = useState(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+    <div className="min-h-screen select-none bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Header with Logo */}
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-6">

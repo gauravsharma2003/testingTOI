@@ -62,5 +62,31 @@
             "Click on the cards to flip them.",
             "Wrong guess will reset the game."
         ]
+    },
+    {
+        "name": "Circuit",
+        "description": "Connect the dots to create a circuit.",
+        "image": "https://i.imgur.com/hnnRTrC.png",
+        "link": "circuit",
+        "playcta": "Play Now",
+        "gamecolor": "#5f4877",
+        "howtoplay": [
+            "Connect the dots to create a circuit.",
+            "The circuit must be a single continuous line.",
+            "The circuit must be a single continuous line."
+        ]
+    },
+    {
+        "name": "Who's That?",
+        "description": "Guess the player.",
+        "image": "https://i.imgur.com/hnnRTrC.png",
+        "link": "whosthat",
+        "playcta": "Play Now",
+        "gamecolor": "#00875b",
+        "howtoplay": [
+            "Guess the player from the jersey number/team.",
+            "Click on the player to guess.",
+            "You have 3 guesses to guess the player."
+        ]
     }
 ]

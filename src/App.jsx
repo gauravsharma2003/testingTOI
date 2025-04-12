@@ -8,7 +8,8 @@ import { Analytics } from '@vercel/analytics/react';
 import Sudoku from './components/Sudoku';
 import WordRow from './components/WordRow';
 import MemoryMan from './components/MemoryMan';  
-
+import Circuit from './components/Circuit';
+import Whosthat from './components/Whosthat';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
   {
     path : "/memoryman",
     element: <MemoryMan />
+  },
+  {
+    path : "/circuit",
+    element: <Circuit />
+  },
+  {
+    path : "/whosthat",
+    element: <Whosthat />
   }
 ]);
 

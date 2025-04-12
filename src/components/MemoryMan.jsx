@@ -83,7 +83,7 @@ const MemoryMan = () => {
   };
   
   return (
-    <div className="relative w-full h-screen bg-zinc-900 overflow-hidden flex flex-col">
+    <div className="relative w-full select-none h-screen bg-zinc-900 overflow-hidden flex flex-col">
       {/* Header with buttons */}
       <div className="w-full px-4 py-2 bg-zinc-900 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-white">Memory Man</h1>
@@ -96,7 +96,7 @@ const MemoryMan = () => {
       </div>
       
       {/* Progress bar */}
-      <div className="w-full px-4 py-2 bg-zinc-900 flex justify-center space-x-2">
+      <div className="w-full px-4 select-none py-2 bg-zinc-900 flex justify-center space-x-2">
         {progress.map((state, idx) => (
           <div 
             key={idx} 
