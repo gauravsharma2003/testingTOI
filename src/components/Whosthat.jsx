@@ -7,7 +7,6 @@ function Whosthat() {
   const [guessesLeft, setGuessesLeft] = useState(3);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showHints, setShowHints] = useState([true, false, false, false, false]);
-  const [gameOver, setGameOver] = useState(false);
   const [roundComplete, setRoundComplete] = useState(false);
   const [options, setOptions] = useState([]);
   const [hintsRevealed, setHintsRevealed] = useState(1);
@@ -67,7 +66,7 @@ function Whosthat() {
   }, [currentRound]);
 
   const handleOptionSelect = (option) => {
-    if (roundComplete || gameOver || wrongGuesses.includes(option) || fadingOutGuesses.includes(option)) return;
+    if (roundComplete || wrongGuesses.includes(option) || fadingOutGuesses.includes(option)) return;
     
     if (option === currentPlayer.playerName) {
       setSelectedOption(option);
@@ -113,15 +112,19 @@ function Whosthat() {
   const handleNextRound = () => {
     if (currentRound < totalRounds - 1) {
       setCurrentRound(currentRound + 1);
-    } else {
-      setGameOver(true);
     }
   };
 
   const resetGame = () => {
     setCurrentRound(0);
     setScore(0);
-    setGameOver(false);
+    setGuessesLeft(3);
+    setSelectedOption(null);
+    setShowHints([true, false, false, false, false]);
+    setRoundComplete(false);
+    setHintsRevealed(1);
+    setWrongGuesses([]);
+    setFadingOutGuesses([]);
   };
 
   return (
@@ -259,7 +262,7 @@ function Whosthat() {
                           : 'bg-white/10 hover:bg-white/20 text-white'
                   }`}
                   onClick={() => handleOptionSelect(option)}
-                  disabled={roundComplete || gameOver || fadingOutGuesses.includes(option)}
+                  disabled={roundComplete || fadingOutGuesses.includes(option)}
                 >
                   {option}
                 </button>
@@ -284,7 +287,7 @@ function Whosthat() {
                           : 'bg-white/10 hover:bg-white/20 text-white'
                   }`}
                   onClick={() => handleOptionSelect(options[4])}
-                  disabled={roundComplete || gameOver || fadingOutGuesses.includes(options[4])}
+                  disabled={roundComplete || fadingOutGuesses.includes(options[4])}
                 >
                   {options[4]}
                 </button>
@@ -294,19 +297,9 @@ function Whosthat() {
         </div>
 
         {/* Next/Reset Button */}
-        {roundComplete && !gameOver && (
-          <button
-            className="w-full py-3 sm:py-4 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors text-base sm:text-lg font-semibold shadow-lg"
-            onClick={handleNextRound}
-          >
-            Next Round
-          </button>
-        )}
-
-        {gameOver && (
+        {roundComplete && (
           <div className="text-center">
-            <div className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-white">Game Over!</div>
-            <div className="text-xl sm:text-2xl mb-4 sm:mb-6 text-white">Final Score: {score}</div>
+            <div className="text-xl sm:text-2xl mb-4 sm:mb-6 text-white">Score: {score}</div>
             <button
               className="w-full py-3 sm:py-4 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors text-base sm:text-lg font-semibold shadow-lg"
               onClick={resetGame}
