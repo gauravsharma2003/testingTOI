@@ -7,9 +7,9 @@
             "teamName": "Hyderabad",
             "jerseyTextColor": "#F6F6F6",
             "hints": [
-              "Hint 1: Captained Australia to World Cup (2023) glory & led SRH to the IPL 2024 final.",
-              "Hint 2: World-class Aussie right-arm fast bowler; known for relentless accuracy and leadership.",
-              "Hint 3: Current captain of this franchise (Hyderabad); also a handy lower-order hitter."
+              "<b>Hint 1:</b> Captained Australia to World Cup (2023) glory & led SRH to the IPL 2024 final.",
+              "<b>Hint 2:</b> World-class Aussie right-arm fast bowler; known for relentless accuracy and leadership.",
+              "<b>Hint 3:</b> Current captain of this franchise (Hyderabad); also a handy lower-order hitter."
             ],
             "options": [
               "Pat Cummins",
@@ -26,9 +26,9 @@
             "teamName": "Kolkata",
             "jerseyTextColor": "#F6F6F6",
             "hints": [
-              "Hint 1: Shot to fame in IPL 2021's second half, playing a vital role in KKR reaching the final.",
-              "Hint 2: Indian batting all-rounder; bats left-handed (often top-order) & bowls right-arm medium pace.",
-              "Hint 3: Known for his aggressive batting; has represented India and is KKR's Vice-Captain for 2025."
+              "<b>Hint 1:</b> Shot to fame in IPL 2021's second half, playing a vital role in KKR reaching the final.",
+              "<b>Hint 2:</b> Indian batting all-rounder; bats left-handed (often top-order) & bowls right-arm medium pace.",
+              "<b>Hint 3:</b> Known for his aggressive batting; has represented India and is KKR's Vice-Captain for 2025."
             ],
             "options": [
               "Venkatesh Iyer",
@@ -45,9 +45,9 @@
             "teamName": "Chennai",
             "jerseyTextColor": "#F6F6F6",
             "hints": [
-              "Hint 1: Young Sri Lankan pacer with a unique, slingy bowling action reminiscent of Lasith Malinga.",
-              "Hint 2: Right-arm fast bowler generating good pace and difficult angles, specializing in death overs.",
-              "Hint 3: The initials of his name is M_______"
+              "<b>Hint 1:</b> Young Sri Lankan pacer with a unique, slingy bowling action reminiscent of Lasith Malinga.",
+              "<b>Hint 2:</b> Right-arm fast bowler generating good pace and difficult angles, specializing in death overs.",
+              "<b>Hint 3:</b> The initials of his name is M_______"
             ],
             "options": [
               "Matheesha Pathirana",
@@ -64,9 +64,9 @@
             "teamName": "Mumbai",
             "jerseyTextColor": "#F6F6F6",
             "hints": [
-              "Hint 1: Architect of an IPL dynasty, leading this franchise to a stunning five championship titles between 2013 and 2020.",
-              "Hint 2: India's current Test/ODI captain; known as the 'Hitman' for his signature pull shot and opening prowess.",
-              "Hint 3: Joint world record holder for the most centuries (5) in T20 Internationals."
+              "<b>Hint 1:</b> Architect of an IPL dynasty, leading this franchise to a stunning five championship titles between 2013 and 2020.",
+              "<b>Hint 2:</b> India's current Test/ODI captain; known as the 'Hitman' for his signature pull shot and opening prowess.",
+              "<b>Hint 3:</b> Joint world record holder for the most centuries (5) in T20 Internationals."
             ],
             "options": [
               "Rohit Sharma",
@@ -83,9 +83,9 @@
             "teamName": "Delhi",
             "jerseyTextColor": "#F6F6F6",
             "hints": [
-              "Hint 1: Made a stunning Test debut against England in 2021, grabbing a five-wicket haul in Chennai.",
-              "Hint 2: Left-arm spinner and capable batsman for India; appointed captain of Delhi Capitals for IPL 2025.",
-              "Hint 3: Known as 'Bapu'; lauded for his economical bowling in white-ball cricket."
+              "<b>Hint 1:</b> Made a stunning Test debut against England in 2021, grabbing a five-wicket haul in Chennai.",
+              "<b>Hint 2:</b> Left-arm spinner and capable batsman for India; appointed captain of Delhi Capitals for IPL 2025.",
+              "<b>Hint 3:</b> Known as 'Bapu'; lauded for his economical bowling in white-ball cricket."
             ],
             "options": [
               "Axar Patel",
@@ -102,9 +102,9 @@
             "teamName": "Rajasthan",
             "jerseyTextColor": "#F6F6F6",
             "hints": [
-              "Hint 1: In 2019, playing for RR, he became the youngest player at that time to score an IPL half-century.",
-              "Hint 2: An energetic batting all-rounder from Assam; bats right-handed and bowls handy leg-spin/off-spin.",
-              "Hint 3: Recognised for his unique 'Bihu dance' celebration and plays a crucial role as a finisher for the Royals."
+              "<b>Hint 1:</b> In 2019, playing for RR, he became the youngest player at that time to score an IPL half-century.",
+              "<b>Hint 2:</b> An energetic batting all-rounder from Assam; bats right-handed and bowls handy leg-spin/off-spin.",
+              "<b>Hint 3:</b> Recognised for his unique 'Bihu dance' celebration and plays a crucial role as a finisher for the Royals."
             ],
             "options": [
               "Riyan Parag",
