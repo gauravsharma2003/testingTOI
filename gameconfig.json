@@ -1,5 +1,18 @@
 [
     {
+        "name": "Who's That?",
+        "description": "Guess the player.",
+        "image": "https://static.toiimg.com/photo/119301593.cms",
+        "link": "whosthat",
+        "playcta": "Play Now",
+        "gamecolor": "#eab03c",
+        "howtoplay": [
+            "Guess the player from the jersey number/team.",
+            "Click on the player to guess.",
+            "You have 3 guesses to guess the player."
+        ]
+    },
+    {
         "name": "Akari",
         "description": "Place bulbs to illuminate the grid while following the rules.",
         "image": "https://www.nikoli.co.jp/en/wp-content/themes/nikoli_en/images/puzzles/akari03.gif",
@@ -74,19 +87,6 @@
             "Connect the dots to create a circuit.",
             "The circuit must be a single continuous line.",
             "The circuit must be a single continuous line."
-        ]
-    },
-    {
-        "name": "Who's That?",
-        "description": "Guess the player.",
-        "image": "https://static.toiimg.com/photo/119301593.cms",
-        "link": "whosthat",
-        "playcta": "Play Now",
-        "gamecolor": "#eab03c",
-        "howtoplay": [
-            "Guess the player from the jersey number/team.",
-            "Click on the player to guess.",
-            "You have 3 guesses to guess the player."
         ]
     }
 ]
