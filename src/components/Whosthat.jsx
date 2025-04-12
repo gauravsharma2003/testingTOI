@@ -8,7 +8,6 @@ function Whosthat() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showHints, setShowHints] = useState([true, false, false, false, false]);
   const [roundComplete, setRoundComplete] = useState(false);
-  const [options, setOptions] = useState([]);
   const [hintsRevealed, setHintsRevealed] = useState(1);
   const [wrongGuesses, setWrongGuesses] = useState([]);
   const [fadingOutGuesses, setFadingOutGuesses] = useState([]);
@@ -23,39 +22,6 @@ function Whosthat() {
   };
 
   useEffect(() => {
-    const allPlayers = [...whosthat.playersList];
-    const correctPlayer = currentPlayer.playerName;
-    const correctInitial = correctPlayer.charAt(0);
-    
-    // Find players with same initial
-    const sameInitialPlayers = allPlayers.filter(
-      player => player !== correctPlayer && player.charAt(0) === correctInitial
-    );
-    
-    // Get one player with same initial
-    const sameInitialPlayer = sameInitialPlayers.length > 0 
-      ? sameInitialPlayers[Math.floor(Math.random() * sameInitialPlayers.length)]
-      : null;
-    
-    // Get other random players
-    const otherOptions = allPlayers
-      .filter(player => 
-        player !== correctPlayer && 
-        player !== sameInitialPlayer &&
-        player.charAt(0) !== correctInitial
-      )
-      .sort(() => 0.5 - Math.random())
-      .slice(0, sameInitialPlayer ? 3 : 4);
-    
-    // Combine options
-    const allOptions = sameInitialPlayer 
-      ? [...otherOptions, sameInitialPlayer, correctPlayer]
-      : [...otherOptions, correctPlayer];
-    
-    // Shuffle the options
-    const shuffledOptions = allOptions.sort(() => 0.5 - Math.random());
-    
-    setOptions(shuffledOptions);
     setGuessesLeft(3);
     setSelectedOption(null);
     setShowHints([true, false, false, false, false]);
@@ -242,7 +208,7 @@ function Whosthat() {
         <div className="mb-4 sm:mb-6">
           <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Guess the Player</h3>
           <div className="grid grid-cols-2 gap-2 sm:gap-4">
-            {options
+            {currentPlayer.options
               .filter(option => !wrongGuesses.includes(option))
               .slice(0, 4)
               .map((option, index) => (
@@ -267,29 +233,29 @@ function Whosthat() {
                   {option}
                 </button>
               ))}
-            {options
+            {currentPlayer.options
               .filter(option => !wrongGuesses.includes(option))
               .length > 4 && (
               <div className="col-span-2 flex justify-center">
                 <button
                   key={4}
                   className={`p-2 sm:p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] w-1/2 text-sm sm:text-base ${
-                    fadingOutGuesses.includes(options[4])
+                    fadingOutGuesses.includes(currentPlayer.options[4])
                       ? 'bg-red-500 text-white animate-fade-out'
-                      : selectedOption === options[4]
-                        ? options[4] === currentPlayer.playerName
+                      : selectedOption === currentPlayer.options[4]
+                        ? currentPlayer.options[4] === currentPlayer.playerName
                           ? 'bg-orange-500 text-white shadow-lg'
                           : 'bg-red-500 text-white shadow-lg'
                         : roundComplete
-                          ? options[4] === currentPlayer.playerName
+                          ? currentPlayer.options[4] === currentPlayer.playerName
                             ? 'bg-orange-500 text-white shadow-lg'
                             : 'bg-white/20 text-white'
                           : 'bg-white/10 hover:bg-white/20 text-white'
                   }`}
-                  onClick={() => handleOptionSelect(options[4])}
-                  disabled={roundComplete || fadingOutGuesses.includes(options[4])}
+                  onClick={() => handleOptionSelect(currentPlayer.options[4])}
+                  disabled={roundComplete || fadingOutGuesses.includes(currentPlayer.options[4])}
                 >
-                  {options[4]}
+                  {currentPlayer.options[4]}
                 </button>
               </div>
             )}
@@ -300,12 +266,21 @@ function Whosthat() {
         {roundComplete && (
           <div className="text-center">
             <div className="text-xl sm:text-2xl mb-4 sm:mb-6 text-white">Score: {score}</div>
-            <button
-              className="w-full py-3 sm:py-4 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors text-base sm:text-lg font-semibold shadow-lg"
-              onClick={resetGame}
-            >
-              Play Again
-            </button>
+            {currentRound < totalRounds - 1 ? (
+              <button
+                className="w-full py-3 sm:py-4 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors text-base sm:text-lg font-semibold shadow-lg"
+                onClick={handleNextRound}
+              >
+                Next Round
+              </button>
+            ) : (
+              <button
+                className="w-full py-3 sm:py-4 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors text-base sm:text-lg font-semibold shadow-lg"
+                onClick={resetGame}
+              >
+                Play Again
+              </button>
+            )}
           </div>
         )}
 

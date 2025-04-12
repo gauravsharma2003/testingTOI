@@ -1,17 +1,62 @@
 {
     "roundsInfo": [
         {
-            "playerName": "David Warner",
-            "playerNumber": "31",
+            "playerName": "Pat Cummins",
+            "playerNumber": "30",
             "jerseyImageUrl": "https://static.toiimg.com/photo/118960937.cms",
             "teamName": "Hyderabad",
             "jerseyTextColor": "#F6F6F6",
             "hints": [
-                "<b>Hint 1:</b> I represent Australia in international cricket.",
-                "<b>Hint 2:</b> I'm Left Handed batsman IPL, who led SRH to win IPL 2016.",
-                "<b>Hint 3:</b> My initials of name are - D____"
+              "Hint 1: Captained Australia to World Cup (2023) glory & led SRH to the IPL 2024 final.",
+              "Hint 2: World-class Aussie right-arm fast bowler; known for relentless accuracy and leadership.",
+              "Hint 3: Current captain of this franchise (Hyderabad); also a handy lower-order hitter."
+            ],
+            "options": [
+              "Pat Cummins",
+              "Mitchell Starc",
+              "Josh Hazlewood",
+              "Jasprit Bumrah",
+              "Kane Williamson"
             ]
-        }
+          },
+          {
+            "playerName": "Venkatesh Iyer",
+            "playerNumber": "25",
+            "jerseyImageUrl": "https://static.toiimg.com/photo/118960926.cms",
+            "teamName": "Kolkata",
+            "jerseyTextColor": "#F6F6F6",
+            "hints": [
+              "Hint 1: Shot to fame in IPL 2021's second half, playing a vital role in KKR reaching the final.",
+              "Hint 2: Indian batting all-rounder; bats left-handed (often top-order) & bowls right-arm medium pace.",
+              "Hint 3: Known for his aggressive batting; has represented India and is KKR's Vice-Captain for 2025."
+            ],
+            "options": [
+              "Venkatesh Iyer",
+              "Nitish Rana",
+              "Shreyas Iyer",
+              "Hardik Pandya",
+              "Shubman Gill"
+            ]
+          },
+          {
+            "playerName": "Matheesha Pathirana",
+            "playerNumber": "81",
+            "jerseyImageUrl": "https://static.toiimg.com/photo/118960941.cms",
+            "teamName": "Chennai",
+            "jerseyTextColor": "#F6F6F6",
+            "hints": [
+              "Hint 1: Young Sri Lankan pacer with a unique, slingy bowling action reminiscent of Lasith Malinga.",
+              "Hint 2: Right-arm fast bowler generating good pace and difficult angles, specializing in death overs.",
+              "Hint 3: Became a key strike bowler for Chennai Super Kings, often trusted in crucial end-game situations."
+            ],
+            "options": [
+              "Matheesha Pathirana",
+              "Lasith Malinga",
+              "Nuwan Thushara",
+              "Mustafizur Rahman",
+              "Tushar Deshpande"
+            ]
+          }      
     ],
     "backgroundImageUrl": "https://static.toiimg.com/photo/119199147.cms",
     "userInputTitleText": "Guess the Player",
