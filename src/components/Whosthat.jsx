@@ -1,6 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import whosthat from '../assets/whosthat.json';
 
+// Add CSS animations
+const styles = `
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .option-button {
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease-out;
+  }
+
+  .option-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .option-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .option-placeholder {
+    visibility: hidden;
+    height: 48px;
+  }
+
+  .option-container {
+    position: relative;
+    min-height: 48px;
+  }
+
+  .option-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: all 0.3s ease-out;
+  }
+
+  .option-button.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+`;
+
 function Whosthat() {
   const [currentRound, setCurrentRound] = useState(0);
   const [score, setScore] = useState(0);
@@ -12,7 +68,6 @@ function Whosthat() {
   const [roundComplete, setRoundComplete] = useState(false);
   const [hintsRevealed, setHintsRevealed] = useState(1);
   const [wrongGuesses, setWrongGuesses] = useState([]);
-  const [fadingOutGuesses, setFadingOutGuesses] = useState([]);
   const [toast, setToast] = useState({ show: false, message: '' });
   const [shuffledOptions, setShuffledOptions] = useState([]);
 
@@ -39,43 +94,50 @@ function Whosthat() {
     setHintsRevealed(1);
     setRoundComplete(false);
     setWrongGuesses([]);
-    setFadingOutGuesses([]);
   }, [currentRound, currentPlayer.options]);
 
+  // Add style tag to inject animations
+  useEffect(() => {
+    const styleTag = document.createElement('style');
+    styleTag.innerHTML = styles;
+    document.head.appendChild(styleTag);
+    return () => {
+      document.head.removeChild(styleTag);
+    };
+  }, []);
+
   const handleOptionSelect = (option) => {
-    if (roundComplete || wrongGuesses.includes(option) || fadingOutGuesses.includes(option)) return;
+    if (roundComplete || wrongGuesses.includes(option)) return;
     
     if (option === currentPlayer.playerName) {
       setSelectedOption(option);
-      const currentRoundScore = guessesLeft === 3 ? 100 : 100 - (3 - guessesLeft) * 20;
-      setRoundScore(currentRoundScore);
-      setScore(score + currentRoundScore);
-      setPlayerScores(prev => [...prev, { player: currentPlayer.playerName, score: currentRoundScore }]);
+      const roundScore = guessesLeft === 3 ? 100 : 100 - (3 - guessesLeft) * 20;
+      setRoundScore(roundScore);
+      setScore(score + roundScore);
+      setPlayerScores(prev => [...prev, { player: currentPlayer.playerName, score: roundScore }]);
       setRoundComplete(true);
     } else {
-      setFadingOutGuesses(prev => [...prev, option]);
+      // Simply add the option to wrong guesses
+      setWrongGuesses(prev => [...prev, option]);
       showToast('Wrong guess! A new hint is revealed.');
+      setGuessesLeft(guessesLeft - 1);
       
-      setTimeout(() => {
-        setWrongGuesses(prev => [...prev, option]);
-        setFadingOutGuesses(prev => prev.filter(guess => guess !== option));
-        setGuessesLeft(guessesLeft - 1);
-        
-        if (hintsRevealed < currentPlayer.hints.length) {
-          setShowHints(prev => {
-            const newHints = [...prev];
-            newHints[hintsRevealed] = true;
-            return newHints;
-          });
-          setHintsRevealed(prev => prev + 1);
-        }
-        
-        if (guessesLeft <= 1) {
-          setRoundScore(0);
-          setPlayerScores(prev => [...prev, { player: currentPlayer.playerName, score: 0 }]);
-          setRoundComplete(true);
-        }
-      }, 500);
+      // Reveal next hint if available
+      if (hintsRevealed < currentPlayer.hints.length) {
+        setShowHints(prev => {
+          const newHints = [...prev];
+          newHints[hintsRevealed] = true;
+          return newHints;
+        });
+        setHintsRevealed(prev => prev + 1);
+      }
+      
+      // Check if game should end
+      if (guessesLeft <= 1) {
+        setRoundScore(0);
+        setPlayerScores(prev => [...prev, { player: currentPlayer.playerName, score: 0 }]);
+        setRoundComplete(true);
+      }
     }
   };
 
@@ -107,8 +169,13 @@ function Whosthat() {
     setRoundComplete(false);
     setHintsRevealed(1);
     setWrongGuesses([]);
-    setFadingOutGuesses([]);
+    setFadingOutGuess(null);
+    setMovingOptions([]);
+    setAnimationInProgress(false);
   };
+
+  // Get visible options (not wrong guesses)
+  const visibleOptions = shuffledOptions.filter(option => !wrongGuesses.includes(option));
 
   return (
     <div 
@@ -169,7 +236,7 @@ function Whosthat() {
 
         {/* Hints Section */}
         <div className="mb-6 sm:mb-8">
-          <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">Hints</h3>
+         
           <div className="bg-white/10 rounded-xl p-3 sm:p-4 relative">
             {/* Left Arrow */}
             {hintsRevealed > 1 && (
@@ -222,11 +289,11 @@ function Whosthat() {
         </div>
 
         {/* Options */}
-        <div className="mb-4 sm:mb-6">
-          <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white">
+        <div className="mb-4 sm:mb-6 w-full">
+          <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white text-center">
             {roundComplete ? 'Correct Answer' : 'Guess the Player'}
           </h3>
-          <div className="grid grid-cols-2 gap-2 sm:gap-4">
+          <div className="options-grid">
             {roundComplete ? (
               <div className="col-span-2">
                 <div className="p-4 sm:p-6 bg-orange-500 text-white rounded-xl text-center text-lg sm:text-xl font-semibold shadow-lg">
@@ -235,49 +302,101 @@ function Whosthat() {
               </div>
             ) : (
               <>
-                {shuffledOptions
-                  .filter(option => !wrongGuesses.includes(option))
-                  .slice(0, 4)
-                  .map((option, index) => (
+                {/* First row - 2 options */}
+                <div className="option-container">
+                  <div className="option-placeholder" />
+                  {shuffledOptions[0] && !wrongGuesses.includes(shuffledOptions[0]) && (
                     <button
-                      key={index}
-                      className={`p-2 sm:p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] text-sm sm:text-base ${
-                        fadingOutGuesses.includes(option)
-                          ? 'bg-red-500 text-white animate-fade-out'
-                          : selectedOption === option
-                            ? option === currentPlayer.playerName
-                              ? 'bg-orange-500 text-white shadow-lg'
-                              : 'bg-red-500 text-white shadow-lg'
-                            : 'bg-white/10 hover:bg-white/20 text-white'
+                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
+                        selectedOption === shuffledOptions[0]
+                          ? shuffledOptions[0] === currentPlayer.playerName
+                            ? 'bg-orange-500 text-white shadow-lg'
+                            : 'bg-red-500 text-white shadow-lg'
+                          : 'bg-white/10 hover:bg-white/20 text-white'
                       }`}
-                      onClick={() => handleOptionSelect(option)}
-                      disabled={roundComplete || fadingOutGuesses.includes(option)}
+                      onClick={() => handleOptionSelect(shuffledOptions[0])}
+                      disabled={roundComplete}
                     >
-                      {option}
+                      {shuffledOptions[0]}
                     </button>
-                  ))}
-                {shuffledOptions
-                  .filter(option => !wrongGuesses.includes(option))
-                  .length > 4 && (
-                  <div className="col-span-2 flex justify-center">
+                  )}
+                </div>
+                <div className="option-container">
+                  <div className="option-placeholder" />
+                  {shuffledOptions[1] && !wrongGuesses.includes(shuffledOptions[1]) && (
                     <button
-                      key={4}
-                      className={`p-2 sm:p-4 rounded-xl text-center transition-all duration-300 transform hover:scale-[1.02] w-1/2 text-sm sm:text-base ${
-                        fadingOutGuesses.includes(shuffledOptions[4])
-                          ? 'bg-red-500 text-white animate-fade-out'
-                          : selectedOption === shuffledOptions[4]
-                            ? shuffledOptions[4] === currentPlayer.playerName
-                              ? 'bg-orange-500 text-white shadow-lg'
-                              : 'bg-red-500 text-white shadow-lg'
-                            : 'bg-white/10 hover:bg-white/20 text-white'
+                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
+                        selectedOption === shuffledOptions[1]
+                          ? shuffledOptions[1] === currentPlayer.playerName
+                            ? 'bg-orange-500 text-white shadow-lg'
+                            : 'bg-red-500 text-white shadow-lg'
+                          : 'bg-white/10 hover:bg-white/20 text-white'
+                      }`}
+                      onClick={() => handleOptionSelect(shuffledOptions[1])}
+                      disabled={roundComplete}
+                    >
+                      {shuffledOptions[1]}
+                    </button>
+                  )}
+                </div>
+
+                {/* Second row - 2 options */}
+                <div className="option-container">
+                  <div className="option-placeholder" />
+                  {shuffledOptions[2] && !wrongGuesses.includes(shuffledOptions[2]) && (
+                    <button
+                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
+                        selectedOption === shuffledOptions[2]
+                          ? shuffledOptions[2] === currentPlayer.playerName
+                            ? 'bg-orange-500 text-white shadow-lg'
+                            : 'bg-red-500 text-white shadow-lg'
+                          : 'bg-white/10 hover:bg-white/20 text-white'
+                      }`}
+                      onClick={() => handleOptionSelect(shuffledOptions[2])}
+                      disabled={roundComplete}
+                    >
+                      {shuffledOptions[2]}
+                    </button>
+                  )}
+                </div>
+                <div className="option-container">
+                  <div className="option-placeholder" />
+                  {shuffledOptions[3] && !wrongGuesses.includes(shuffledOptions[3]) && (
+                    <button
+                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
+                        selectedOption === shuffledOptions[3]
+                          ? shuffledOptions[3] === currentPlayer.playerName
+                            ? 'bg-orange-500 text-white shadow-lg'
+                            : 'bg-red-500 text-white shadow-lg'
+                          : 'bg-white/10 hover:bg-white/20 text-white'
+                      }`}
+                      onClick={() => handleOptionSelect(shuffledOptions[3])}
+                      disabled={roundComplete}
+                    >
+                      {shuffledOptions[3]}
+                    </button>
+                  )}
+                </div>
+
+                {/* Third row - 1 option */}
+                <div className="option-container col-span-2">
+                  <div className="option-placeholder" />
+                  {shuffledOptions[4] && !wrongGuesses.includes(shuffledOptions[4]) && (
+                    <button
+                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
+                        selectedOption === shuffledOptions[4]
+                          ? shuffledOptions[4] === currentPlayer.playerName
+                            ? 'bg-orange-500 text-white shadow-lg'
+                            : 'bg-red-500 text-white shadow-lg'
+                          : 'bg-white/10 hover:bg-white/20 text-white'
                       }`}
                       onClick={() => handleOptionSelect(shuffledOptions[4])}
-                      disabled={roundComplete || fadingOutGuesses.includes(shuffledOptions[4])}
+                      disabled={roundComplete}
                     >
                       {shuffledOptions[4]}
                     </button>
-                  </div>
-                )}
+                  )}
+                </div>
               </>
             )}
           </div>
