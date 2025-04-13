@@ -236,8 +236,7 @@ function Whosthat() {
 
         {/* Hints Section */}
         <div className="mb-6 sm:mb-8">
-         
-          <div className="bg-white/10 rounded-xl p-3 sm:p-4 relative">
+          <div className="bg-white/10 rounded-xl p-3 sm:p-4 relative h-[120px]">
             {/* Left Arrow */}
             {hintsRevealed > 1 && (
               <button
@@ -258,7 +257,7 @@ function Whosthat() {
               </button>
             )}
 
-            <div className="min-h-[80px] sm:min-h-[100px] flex items-center justify-center mx-8 sm:mx-10">
+            <div className="h-full flex items-center justify-center mx-8 sm:mx-10">
               {currentPlayer.hints.map((hint, index) => (
                 <div 
                   key={index}
@@ -273,7 +272,7 @@ function Whosthat() {
                 </div>
               ))}
             </div>
-            <div className="flex justify-center items-center mt-3 sm:mt-4">
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
               <div className="flex gap-1 sm:gap-2">
                 {currentPlayer.hints.map((_, index) => (
                   <div
@@ -293,7 +292,7 @@ function Whosthat() {
           <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-white text-center">
             {roundComplete ? 'Correct Answer' : 'Guess the Player'}
           </h3>
-          <div className="options-grid">
+          <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
             {roundComplete ? (
               <div className="col-span-2">
                 <div className="p-4 sm:p-6 bg-orange-500 text-white rounded-xl text-center text-lg sm:text-xl font-semibold shadow-lg">
@@ -303,16 +302,15 @@ function Whosthat() {
             ) : (
               <>
                 {/* First row - 2 options */}
-                <div className="option-container">
-                  <div className="option-placeholder" />
+                <div className="relative h-16">
                   {shuffledOptions[0] && !wrongGuesses.includes(shuffledOptions[0]) && (
                     <button
-                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
+                      className={`absolute inset-0 w-full h-full p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base font-medium transition-all duration-200 ${
                         selectedOption === shuffledOptions[0]
                           ? shuffledOptions[0] === currentPlayer.playerName
                             ? 'bg-orange-500 text-white shadow-lg'
                             : 'bg-red-500 text-white shadow-lg'
-                          : 'bg-white/10 hover:bg-white/20 text-white'
+                          : 'bg-white/10 hover:bg-white/20 text-white hover:shadow-md'
                       }`}
                       onClick={() => handleOptionSelect(shuffledOptions[0])}
                       disabled={roundComplete}
@@ -321,16 +319,15 @@ function Whosthat() {
                     </button>
                   )}
                 </div>
-                <div className="option-container">
-                  <div className="option-placeholder" />
+                <div className="relative h-16">
                   {shuffledOptions[1] && !wrongGuesses.includes(shuffledOptions[1]) && (
                     <button
-                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
+                      className={`absolute inset-0 w-full h-full p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base font-medium transition-all duration-200 ${
                         selectedOption === shuffledOptions[1]
                           ? shuffledOptions[1] === currentPlayer.playerName
                             ? 'bg-orange-500 text-white shadow-lg'
                             : 'bg-red-500 text-white shadow-lg'
-                          : 'bg-white/10 hover:bg-white/20 text-white'
+                          : 'bg-white/10 hover:bg-white/20 text-white hover:shadow-md'
                       }`}
                       onClick={() => handleOptionSelect(shuffledOptions[1])}
                       disabled={roundComplete}
@@ -341,16 +338,15 @@ function Whosthat() {
                 </div>
 
                 {/* Second row - 2 options */}
-                <div className="option-container">
-                  <div className="option-placeholder" />
+                <div className="relative h-16">
                   {shuffledOptions[2] && !wrongGuesses.includes(shuffledOptions[2]) && (
                     <button
-                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
+                      className={`absolute inset-0 w-full h-full p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base font-medium transition-all duration-200 ${
                         selectedOption === shuffledOptions[2]
                           ? shuffledOptions[2] === currentPlayer.playerName
                             ? 'bg-orange-500 text-white shadow-lg'
                             : 'bg-red-500 text-white shadow-lg'
-                          : 'bg-white/10 hover:bg-white/20 text-white'
+                          : 'bg-white/10 hover:bg-white/20 text-white hover:shadow-md'
                       }`}
                       onClick={() => handleOptionSelect(shuffledOptions[2])}
                       disabled={roundComplete}
@@ -359,16 +355,15 @@ function Whosthat() {
                     </button>
                   )}
                 </div>
-                <div className="option-container">
-                  <div className="option-placeholder" />
+                <div className="relative h-16">
                   {shuffledOptions[3] && !wrongGuesses.includes(shuffledOptions[3]) && (
                     <button
-                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
+                      className={`absolute inset-0 w-full h-full p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base font-medium transition-all duration-200 ${
                         selectedOption === shuffledOptions[3]
                           ? shuffledOptions[3] === currentPlayer.playerName
                             ? 'bg-orange-500 text-white shadow-lg'
                             : 'bg-red-500 text-white shadow-lg'
-                          : 'bg-white/10 hover:bg-white/20 text-white'
+                          : 'bg-white/10 hover:bg-white/20 text-white hover:shadow-md'
                       }`}
                       onClick={() => handleOptionSelect(shuffledOptions[3])}
                       disabled={roundComplete}
@@ -378,24 +373,25 @@ function Whosthat() {
                   )}
                 </div>
 
-                {/* Third row - 1 option */}
-                <div className="option-container col-span-2">
-                  <div className="option-placeholder" />
-                  {shuffledOptions[4] && !wrongGuesses.includes(shuffledOptions[4]) && (
-                    <button
-                      className={`option-button p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base ${
-                        selectedOption === shuffledOptions[4]
-                          ? shuffledOptions[4] === currentPlayer.playerName
-                            ? 'bg-orange-500 text-white shadow-lg'
-                            : 'bg-red-500 text-white shadow-lg'
-                          : 'bg-white/10 hover:bg-white/20 text-white'
-                      }`}
-                      onClick={() => handleOptionSelect(shuffledOptions[4])}
-                      disabled={roundComplete}
-                    >
-                      {shuffledOptions[4]}
-                    </button>
-                  )}
+                {/* Third row - 1 option centered */}
+                <div className="col-span-2 flex justify-center">
+                  <div className="relative h-16 w-1/2">
+                    {shuffledOptions[4] && !wrongGuesses.includes(shuffledOptions[4]) && (
+                      <button
+                        className={`absolute inset-0 w-full h-full p-3 sm:p-4 rounded-xl text-center text-sm sm:text-base font-medium transition-all duration-200 ${
+                          selectedOption === shuffledOptions[4]
+                            ? shuffledOptions[4] === currentPlayer.playerName
+                              ? 'bg-orange-500 text-white shadow-lg'
+                              : 'bg-red-500 text-white shadow-lg'
+                            : 'bg-white/10 hover:bg-white/20 text-white hover:shadow-md'
+                        }`}
+                        onClick={() => handleOptionSelect(shuffledOptions[4])}
+                        disabled={roundComplete}
+                      >
+                        {shuffledOptions[4]}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </>
             )}
